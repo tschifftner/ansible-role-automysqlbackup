@@ -1,0 +1,86 @@
+---
+#- name: Install automysqlbackup
+#  apt:
+#    pkg: 'automysqlbackup'
+#    state: latest
+#- set_fact:
+#    automysqlbackup_unarchiv_dir: "{{ automysqlbackup_download_url | basename | replace('.tar.gz', '') }}"
+#
+#- name: Ensurce working dir exists
+#  file:
+#    path: '{{ automysqlbackup_working_dir }}'
+#    state: directory
+#
+#- name: Unarchive file
+#  register: automysqlbackup_extract
+#  unarchive:
+#    src: '{{ automysqlbackup_download_url }}'
+#    dest: '{{ automysqlbackup_working_dir }}'
+#    copy: no
+#    creates: '{{ automysqlbackup_working_dir }}/install.sh'
+
+#- name: Ensure install script is executable
+#  file:
+#    path: '{{ automysqlbackup_working_dir }}/install.sh'
+#    mode: '755'
+
+#- name: Install automysqlbackup
+#  become: true
+#  shell: "echo '' ./install.sh"
+#  args:
+#    chdir: '{{ automysqlbackup_working_dir }}'
+
+- name: Install automysqlbackup
+  copy:
+    src: 'automysqlbackup.sh'
+    dest: '/usr/local/bin/automysqlbackup'
+    owner: root
+    group: root
+    mode: '555'
+
+- name: Ensure config dir exists
+  file:
+    path: '/etc/automysqlbackup'
+    state: directory
+
+- name: Ensure backup dir exists
+  file:
+    path: '{{ automysqlbackup_backup_dir }}'
+    state: directory
+
+- name: Setup config
+  template:
+    src: 'automysqlbackup.conf'
+    dest: '/etc/automysqlbackup/automysqlbackup.conf'
+    owner: root
+    group: root
+    mode: '400'
+
+#- name: remove the cron.daily file
+#  file:
+#    path: /etc/cron.daily/automysqlbackup state=absent
+
+- name: Add automysqlbackup cron job
+  cron:
+    name: "automysqlbackup"
+    minute: "{{ automysqlbackup_cron_minute }}"
+    hour: "{{ automysqlbackup_cron_hour }}"
+    day: "{{ automysqlbackup_cron_day }}"
+    month: "{{ automysqlbackup_cron_month }}"
+    weekday: "{{ automysqlbackup_cron_weekday }}"
+    user: root
+    job: "/usr/local/bin/automysqlbackup && echo '$(date +\"%m-%d-%Y\")' > /var/backup/db/automysqlbackup_status"
+
+
+- name: Export priviledges
+  cron:
+    name: "mysql priviledges"
+    minute: "{{ automysqlbackup_cron_minute }}"
+    hour: "{{ automysqlbackup_cron_hour }}"
+    day: "{{ automysqlbackup_cron_day }}"
+    month: "{{ automysqlbackup_cron_month }}"
+    weekday: "{{ automysqlbackup_cron_weekday }}"
+    user: root
+    job: "/usr/bin/mysqldump -nt mysql user db | gzip > /var/backup/db/privileges.sql.gz"
+  when: automysqlbackup_export_priviledges
+
