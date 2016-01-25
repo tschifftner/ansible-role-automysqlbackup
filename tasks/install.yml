@@ -1,0 +1,28 @@
+---
+- name: Install automysqlbackup
+  copy:
+    src: 'automysqlbackup.sh'
+    dest: '/usr/local/bin/automysqlbackup'
+    owner: root
+    group: root
+    mode: '555'
+
+- name: Install automysqlbackup-wrapper
+  template:
+    src: 'automysqlbackup-wrapper.sh'
+    dest: '/usr/local/bin/automysqlbackup-wrapper.sh'
+    owner: root
+    group: root
+    mode: '555'
+
+- name: Ensure directories exist
+  file:
+    path: '/etc/automysqlbackup'
+    state: directory
+    owner: root
+    group: root
+    mode: '2740'
+  with_items:
+    - '/etc/automysqlbackup'
+    - '{{ automysqlbackup_backup_dir }}'
+    - '{{ automysqlbackup_log_dir }}'
