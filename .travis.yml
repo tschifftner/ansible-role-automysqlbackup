@@ -44,7 +44,7 @@ script:
 
   # Check if cronjob exists
   - >
-    sudo crontab -l | grep automysqlbackup
+    test -e /etc/cron.d/automysqlbackup
     && (echo 'cronjob is installed: pass' && exit 0)
     || (echo 'cronjob is installed: fail' && exit 1)
 
