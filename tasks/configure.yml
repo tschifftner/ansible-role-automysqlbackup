@@ -22,20 +22,6 @@
     group: root
     mode: '400'
 
-#- name: Add automysqlbackup cron job
-#  cron:
-#    name: "automysqlbackup"
-#    minute: "{{ automysqlbackup_cron_minute }}"
-#    hour: "{{ automysqlbackup_cron_hour }}"
-#    day: "{{ automysqlbackup_cron_day }}"
-#    month: "{{ automysqlbackup_cron_month }}"
-#    weekday: "{{ automysqlbackup_cron_weekday }}"
-#    user: root
-#    job: >
-#      $(NOW=$(date +"%Y-%m-%d_%Hh%Mm");
-#      /usr/local/bin/automysqlbackup {{ automysqlbackup_log_dir }}/backup-$NOW.log
-#      && echo $NOW > {{ automysqlbackup_backup_dir }}/automysqlbackup_status)
-
 - name: Export priviledges
   cron:
     name: "mysql priviledges"
@@ -46,27 +32,17 @@
     weekday: "{{ automysqlbackup_cron_weekday }}"
     user: root
     job: "/usr/bin/mysqldump -nt mysql user db | gzip > /var/backup/db/privileges.sql.gz"
+    cron_file: 'mysql_priviledges'
   when: automysqlbackup_export_priviledges
-
-#- name: Export priviledges
-#  cron:
-#    name: "env test"
-#    minute: "{{ automysqlbackup_cron_minute }}"
-#    hour: "{{ automysqlbackup_cron_hour }}"
-#    day: "{{ automysqlbackup_cron_day }}"
-#    month: "{{ automysqlbackup_cron_month }}"
-#    weekday: "{{ automysqlbackup_cron_weekday }}"
-#    user: root
-#    job: "env > /tmp/env.output"
-#  when: automysqlbackup_export_priviledges
 
 - name: Export wrapper
   cron:
     name: "wrapper"
-    minute: "*/3"
+    minute: "{{ automysqlbackup_cron_minute }}"
     hour: "{{ automysqlbackup_cron_hour }}"
     day: "{{ automysqlbackup_cron_day }}"
     month: "{{ automysqlbackup_cron_month }}"
     weekday: "{{ automysqlbackup_cron_weekday }}"
     user: root
+    cron_file: 'automysqlbackup'
     job: /usr/local/bin/automysqlbackup-wrapper.sh

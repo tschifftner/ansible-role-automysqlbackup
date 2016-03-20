@@ -1,6 +1,6 @@
 ---
 # database username and password that will perform the backups
-# if not defined, system debian user will be used
+# if not defined, debian system user will be used
 #automysqlbackup_username: ''
 #automysqlbackup_password: ''
 
@@ -42,8 +42,8 @@ automysqlbackup_mailcontent: quiet
 automysqlbackup_mailaddr: root
 
 # default cron configuration
-automysqlbackup_cron_minute: 6
-automysqlbackup_cron_hour: 20
+automysqlbackup_cron_minute: 35
+automysqlbackup_cron_hour: 6
 automysqlbackup_cron_day: '*'
 automysqlbackup_cron_month: '*'
 automysqlbackup_cron_weekday: '*'
