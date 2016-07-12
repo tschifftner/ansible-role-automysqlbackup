@@ -5,7 +5,7 @@
     dest: '/usr/local/bin/automysqlbackup'
     owner: root
     group: root
-    mode: '555'
+    mode: '0555'
 
 - name: Install automysqlbackup-wrapper
   template:
@@ -13,7 +13,7 @@
     dest: '/usr/local/bin/automysqlbackup-wrapper.sh'
     owner: root
     group: root
-    mode: '555'
+    mode: '0555'
 
 - name: Ensure directories exist
   file:
@@ -21,7 +21,7 @@
     state: directory
     owner: root
     group: root
-    mode: '2740'
+    mode: '0740'
   with_items:
     - '/etc/automysqlbackup'
     - '{{ automysqlbackup_backup_dir }}'

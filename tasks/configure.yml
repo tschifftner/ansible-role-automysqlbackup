@@ -20,7 +20,7 @@
     dest: '/etc/automysqlbackup/automysqlbackup.conf'
     owner: root
     group: root
-    mode: '400'
+    mode: '0400'
 
 - name: Export priviledges
   cron:
