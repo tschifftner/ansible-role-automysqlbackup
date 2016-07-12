@@ -80,10 +80,26 @@ User credentials can be exported via cron. Please set ```automysqlbackup_export_
 root user does not require login on cli.
 
 
+## Restore database
+
+### gzip
+```
+gzip -dc my_database.sql.gz | mysql -h localhost -u root -p my_database
+```
+
+### bzip2
+```
+bunzip2 < my_database.sql.bz2 | mysql -h localhost -u root -p my_database
+```
+or
+```
+bzip2 -d my_database.sql.bz2 | mysql -h localhost -u root -p my_database
+```
+
 ## License
 
 MIT / BSD
 
 ## Author Information
 
- - Tobias Schifftner, @tschifftner
+ - [Tobias Schifftner](https://twitter.com/tschifftner), [ambimax® GmbH](https://www.ambimax.de)
