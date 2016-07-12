@@ -72,7 +72,7 @@ None.
 
     - hosts: server
       roles:
-        - { role: tschifftner.ansible-role-nginx }
+        - { role: tschifftner.automysqlbackup }
 
 ## Export priviledges
 
