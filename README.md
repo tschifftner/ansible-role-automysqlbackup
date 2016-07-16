@@ -98,7 +98,7 @@ bzip2 -d my_database.sql.bz2 | mysql -h localhost -u root -p my_database
 
 ## License
 
-MIT / BSD
+[MIT License](http://choosealicense.com/licenses/mit/)
 
 ## Author Information
 
