@@ -1,4 +1,9 @@
 ---
+
+- name: Install cron
+  apt:
+    pkg: cron
+
 - name: Install automysqlbackup
   copy:
     src: 'automysqlbackup.sh'
