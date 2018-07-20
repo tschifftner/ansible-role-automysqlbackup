@@ -34,7 +34,7 @@ script:
   - ${DOCKER} test -e /etc/cron.d/automysqlbackup
 
   # Simulate cron
-  - ${DOCKER} /usr/local/bin/automysqlbackup-wrapper.sh
+  - ${DOCKER} /usr/local/bin/automysqlbackup-wrapper.sh && sleep 5
 
   # Check if cronjob worked
   - ${DOCKER} test -e /var/backup/db/latest/daily_travis_testdb.sql.gz
@@ -44,6 +44,7 @@ after_failure:
   - ${DOCKER} ls -la /var/backup/db/latest
   - ${DOCKER} tail -n 150 /var/log/syslog
   - ${DOCKER} ls -la /var/log/automysqlbackup/
+  - ${DOCKER} cat /var/log/automysqlbackup/*.log
 
 notifications:
   slack: ambimax:2MlPTX9bY9aPxCPhJGxHKIT6
