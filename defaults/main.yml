@@ -13,7 +13,6 @@ automysqlbackup_db_exclude:
   - 'information_schema'
   - 'mysql'
   - 'performance_schema'
-  - 'test'
 
 automysqlbackup_table_exclude: []
 
@@ -53,3 +52,5 @@ automysqlbackup_export_priviledges: true
 
 # If monit is used, define monit service
 automysqlbackup_define_monit_service: false
+
+automysqlbackup_working_dir: '/opt/automysqlbackup'

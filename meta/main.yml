@@ -6,15 +6,17 @@ galaxy_info:
   description: Installs automysqlbackup on Debian/Ubuntu linux servers.
   company: ambimax® GmbH
   license: MIT
-  min_ansible_version: 2.1
+  role_name: automysqlbackup
+  min_ansible_version: 2.5
   platforms:
   - name: Debian
     versions:
     - jessie
+    - stretch
   - name: Ubuntu
     versions:
-    - trusty
     - xenial
+    - bionic
   - name: EL
     versions:
     - 7
