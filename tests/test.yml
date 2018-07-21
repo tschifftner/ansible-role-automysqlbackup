@@ -3,5 +3,9 @@
 - hosts: localhost
   remote_user: root
 
+  vars:
+    automysqlbackup_username: 'admin'
+    automysqlbackup_password: 'travis'
+    
   roles:
     - role_under_test

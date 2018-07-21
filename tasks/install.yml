@@ -2,15 +2,16 @@
 
 - name: Install cron
   apt:
-    pkg: cron
+    pkg: '{{ item }}'
+  with_items: '{{ automysqlbackup_required_apt_packages }}'
 
 - name: Install automysqlbackup
   copy:
-    src: 'automysqlbackup.sh'
+    src: 'automysqlbackup'
     dest: '/usr/local/bin/automysqlbackup'
     owner: root
     group: root
-    mode: '0555'
+    mode: '0500'
 
 - name: Install automysqlbackup-wrapper
   template:
@@ -18,7 +19,15 @@
     dest: '/usr/local/bin/automysqlbackup-wrapper.sh'
     owner: root
     group: root
-    mode: '0555'
+    mode: '0500'
+
+- name: Install privileges-wrapper
+  template:
+    src: 'privileges-wrapper.sh'
+    dest: '/usr/local/bin/privileges-wrapper.sh'
+    owner: root
+    group: root
+    mode: '0500'
 
 - name: Ensure directories exist
   file:

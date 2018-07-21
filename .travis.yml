@@ -27,17 +27,29 @@ script:
   # Run tests.
   - ${PWD}/tests/test.sh
 
+  # Simulate mail program exists
+  - ${DOCKER} touch /usr/local/bin/mail
+
   # Make sure automysqlbackup is installed.
   - ${DOCKER} test -e /usr/local/bin/automysqlbackup
 
-  # Check if cronjob exists
+  # Check if automysqlbackup cronjob exists
   - ${DOCKER} test -e /etc/cron.d/automysqlbackup
 
-  # Simulate cron
-  - ${DOCKER} /usr/local/bin/automysqlbackup-wrapper.sh && sleep 5
+  # Simulate automysqlbackup cron
+  - ${DOCKER} /usr/local/bin/automysqlbackup-wrapper.sh
 
-  # Check if cronjob worked
+  # Check if automysqlbackup cronjob worked
   - ${DOCKER} test -e /var/backup/db/latest/daily_travis_testdb.sql.gz
+
+  # Check if privileges cronjob exists
+  - ${DOCKER} test -e /etc/cron.d/mysql_priviledges
+
+  # Simulate privileges cron
+  - ${DOCKER} /usr/local/bin/privileges-wrapper.sh
+
+  # Check if privileges cronjob worked
+  - ${DOCKER} test -e /var/backup/db/privileges.sql.gz
 
 
 after_failure:
@@ -45,6 +57,7 @@ after_failure:
   - ${DOCKER} tail -n 150 /var/log/syslog
   - ${DOCKER} ls -la /var/log/automysqlbackup/
   - ${DOCKER} cat /var/log/automysqlbackup/*.log
+  - ${DOCKER} /usr/local/bin/automysqlbackup
 
 notifications:
   slack: ambimax:2MlPTX9bY9aPxCPhJGxHKIT6
