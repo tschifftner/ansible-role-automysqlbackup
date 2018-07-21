@@ -27,6 +27,9 @@ script:
   # Run tests.
   - ${PWD}/tests/test.sh
 
+  # Simulate mail program exists
+  - ${DOCKER} touch /usr/local/bin/mail
+
   # Make sure automysqlbackup is installed.
   - ${DOCKER} test -e /usr/local/bin/automysqlbackup
 
