@@ -30,14 +30,23 @@ script:
   # Make sure automysqlbackup is installed.
   - ${DOCKER} test -e /usr/local/bin/automysqlbackup
 
-  # Check if cronjob exists
+  # Check if automysqlbackup cronjob exists
   - ${DOCKER} test -e /etc/cron.d/automysqlbackup
 
-  # Simulate cron
-  - ${DOCKER} /usr/local/bin/automysqlbackup-wrapper.sh && sleep 5
+  # Simulate automysqlbackup cron
+  - ${DOCKER} /usr/local/bin/automysqlbackup-wrapper.sh && sleep 2
 
-  # Check if cronjob worked
+  # Check if automysqlbackup cronjob worked
   - ${DOCKER} test -e /var/backup/db/latest/daily_travis_testdb.sql.gz
+
+  # Check if privileges cronjob exists
+  - ${DOCKER} test -e /etc/cron.d/mysql_priviledges
+
+  # Simulate privileges cron
+  - ${DOCKER} /usr/bin/mysqldump -nt mysql user db | gzip > /var/backup/db/privileges.sql.gz && sleep 2
+
+  # Check if privileges cronjob worked
+  - ${DOCKER} test -e /var/backup/db/privileges.sql.gz
 
 
 after_failure:
