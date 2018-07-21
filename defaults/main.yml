@@ -18,8 +18,8 @@ automysqlbackup_table_exclude: []
 
 automysqlbackup_log_dir: /var/log/automysqlbackup
 automysqlbackup_backup_dir: /var/backup/db
-automysqlbackup_multicore: "{{ 'yes' if (ansible_processor_cores | int) > 2 else 'no' }}"
-automysqlbackup_multicore_threads: "{{ (ansible_processor_cores/2 | int) if ansible_processor_cores > 2 else 1 }}"
+automysqlbackup_multicore: "{{ 'yes' if (ansible_processor_cores | int) >= 4 else 'no' }}"
+automysqlbackup_multicore_threads: "{{ (ansible_processor_cores/2 | int) if ansible_processor_cores >= 4 else 1 }}"
 
 # day of the week for weekly backbackups (6 - Saturday)
 automysqlbackup_do_monthly: '01'
