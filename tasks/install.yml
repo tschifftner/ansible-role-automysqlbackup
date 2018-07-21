@@ -2,7 +2,8 @@
 
 - name: Install cron
   apt:
-    pkg: cron
+    pkg: '{{ item }}'
+  with_items: '{{ automysqlbackup_required_apt_packages }}'
 
 - name: Install automysqlbackup
   copy:

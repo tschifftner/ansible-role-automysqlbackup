@@ -54,3 +54,8 @@ automysqlbackup_export_priviledges: true
 automysqlbackup_define_monit_service: false
 
 automysqlbackup_working_dir: '/opt/automysqlbackup'
+
+automysqlbackup_required_apt_packages:
+  - cron
+  - gzip
+  - pigz
