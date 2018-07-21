@@ -6,7 +6,9 @@ Installs automysqlbackup on Debian/Ubuntu linux servers.
 
 ## Requirements
 
-None.
+**`mail` must be available**
+
+Use `apt install mailutils` or fake mail by `touch /usr/local/bin/mail`
 
 ## Role Variables
 
