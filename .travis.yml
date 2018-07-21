@@ -54,6 +54,7 @@ after_failure:
   - ${DOCKER} tail -n 150 /var/log/syslog
   - ${DOCKER} ls -la /var/log/automysqlbackup/
   - ${DOCKER} cat /var/log/automysqlbackup/*.log
+  - ${DOCKER} /usr/local/bin/automysqlbackup
 
 notifications:
   slack: ambimax:2MlPTX9bY9aPxCPhJGxHKIT6
