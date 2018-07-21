@@ -20,6 +20,14 @@
     group: root
     mode: '0555'
 
+- name: Install privileges-wrapper
+  template:
+    src: 'privileges-wrapper.sh'
+    dest: '/usr/local/bin/privileges-wrapper.sh'
+    owner: root
+    group: root
+    mode: '0555'
+
 - name: Ensure directories exist
   file:
     path: '{{ item }}'

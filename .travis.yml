@@ -34,7 +34,7 @@ script:
   - ${DOCKER} test -e /etc/cron.d/automysqlbackup
 
   # Simulate automysqlbackup cron
-  - ${DOCKER} /usr/local/bin/automysqlbackup-wrapper.sh && sleep 2
+  - ${DOCKER} /usr/local/bin/automysqlbackup-wrapper.sh
 
   # Check if automysqlbackup cronjob worked
   - ${DOCKER} test -e /var/backup/db/latest/daily_travis_testdb.sql.gz
@@ -43,7 +43,7 @@ script:
   - ${DOCKER} test -e /etc/cron.d/mysql_priviledges
 
   # Simulate privileges cron
-  - ${DOCKER} /usr/bin/mysqldump -nt mysql user db | gzip > /var/backup/db/privileges.sql.gz && sleep 2
+  - ${DOCKER} /usr/local/bin/privileges-wrapper.sh
 
   # Check if privileges cronjob worked
   - ${DOCKER} test -e /var/backup/db/privileges.sql.gz

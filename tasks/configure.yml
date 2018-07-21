@@ -31,7 +31,7 @@
     month: "{{ automysqlbackup_cron_month }}"
     weekday: "{{ automysqlbackup_cron_weekday }}"
     user: root
-    job: "/usr/bin/mysqldump -nt mysql user db | gzip > /var/backup/db/privileges.sql.gz"
+    job: "/usr/local/bin/privileges-wrapper.sh"
     cron_file: 'mysql_priviledges'
   when: automysqlbackup_export_priviledges
 
